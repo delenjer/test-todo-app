@@ -38,6 +38,7 @@ export const todosSlice = createSlice({
       });
 
       state.todos.sort((a, _b) => a.completed ? 1 : -1);
+      state.allTodos.sort((a, _b) => a.completed ? 1 : -1);
     },
     filterBySearch: (state, action: PayloadAction<string>) => {
       if (!action.payload.length && state.isDone) {
