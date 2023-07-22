@@ -36,6 +36,8 @@ export const todosSlice = createSlice({
 
         return isCompleted ? todo.completed = true : todo.completed = false;
       });
+
+      state.todos.sort((a, _b) => a.completed ? 1 : -1);
     },
     filterBySearch: (state, action: PayloadAction<string>) => {
       if (!action.payload.length && state.isDone) {
@@ -56,6 +58,8 @@ export const todosSlice = createSlice({
     getDoneTodos: (state) => {
       state.isDone = true;
       state.isAll = false;
+
+      state.todos = state.todos.filter(todo => todo.completed);
     },
     getAllTodos: (state) => {
       state.isAll = true;

@@ -12,15 +12,7 @@ export const TodoList = () => {
   const [open, setOpen] = useState(false);
   const [ indexTodo, setIndexTod ] = useState('');
 
-  const {
-    todos,
-    isDone
-  }:Pick<InitialStateDto, 'todos' | 'isDone'> = useSelector((state: RootState) => {
-
-    console.log(state);
-
-    return state.todos;
-  });
+  const { todos }:Pick<InitialStateDto, 'todos'> = useSelector((state: RootState) => state.todos);
   const dispatch = useDispatch();
 
   const handleModal = (e: { stopPropagation: () => void; }, id: string) => {
@@ -40,32 +32,18 @@ export const TodoList = () => {
       {
         todos.length ? (
           <List sx={{ width: '100%', margin: '0 0 16px 0', }}>
-              {
-                !isDone && (
-                  todos.filter(todo => !todo.completed).map((todo:TodosDto) => (
-                    <ItemTodo
-                      key={todo.id}
-                      id={todo.id}
-                      completed={todo.completed}
-                      text={todo.text}
-                      handleOpenModal={handleModal}
-                    />
-                  ))
-                )
-              }
-
-              {
-                todos.filter(todo => todo.completed).map((todo:TodosDto) => (
-                  <ItemTodo
-                    key={todo.id}
-                    id={todo.id}
-                    completed={todo.completed}
-                    text={todo.text}
-                    handleOpenModal={handleModal}
-                  />
-                ))
-              }
-            </List>
+            {
+              todos.map((todo:TodosDto) => (
+                <ItemTodo
+                  key={todo.id}
+                  id={todo.id}
+                  completed={todo.completed}
+                  text={todo.text}
+                  handleOpenModal={handleModal}
+                />
+              ))
+            }
+          </List>
         ) : (
           <p>No Tasks</p>
         )
