@@ -1,5 +1,5 @@
-import {styled} from '@mui/material/styles';
-import {CommonButtonStyled} from '../CommonButtonStyled';
+import { styled } from '@mui/material/styles';
+import { CommonButtonStyled } from '../CommonButtonStyled';
 
 export const AddButton = styled(CommonButtonStyled)({
   '&.MuiButtonBase-root': {

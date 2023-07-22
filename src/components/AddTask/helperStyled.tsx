@@ -28,6 +28,14 @@ export const AddTextField = styled(TextField)`
     transform: translate(14px, -9px) scale(0.75);
   }
 
+  &.Mui-focused {
+    transform: translate(14px, -9px) scale(0.75);
+  }
+
+  & label.MuiInputLabel-shrink {
+    transform: translate(14px, -9px) scale(0.75);
+  }
+
   & .MuiInput-underline:after {
     border-bottom-color: #B2BAC2;
   }

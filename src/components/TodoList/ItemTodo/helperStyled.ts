@@ -8,25 +8,16 @@ interface StyledListItemTextProps {
   completed?: string;
 }
 
-export const StyledListItem = styled(ListItem)`
-  &.MuiListItem-root {
+export const StyledListItem = styled(ListItem)``;
+
+export const StyledListItemButton = styled(ListItemButton)`
+  &.MuiListItemButton-root {
+    width: 100%;
     padding: 14px 20px;
     border-radius: 4px;
     
     &:hover {
       background-color: var(--neutral-gray-4);
-    }
-  }
-`;
-
-export const StyledListItemButton = styled(ListItemButton)`
-  &.MuiListItemButton-root {
-    align-items: flex-start;
-    gap: 0 5px;
-    padding: 0;
-    
-    &:hover {
-      background-color: initial;
     }
   }
 `;

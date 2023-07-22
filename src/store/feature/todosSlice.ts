@@ -1,15 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { TodosDto } from '../../model/model';
-
-interface InitialStateDto {
-  todos: TodosDto[],
-  checkedTodo: string[]
-}
+import { InitialStateDto, TodosDto } from '../../model/model';
 
 const initialState:InitialStateDto = {
   todos: [],
-  checkedTodo: []
+  allTodos: [],
+  checkedTodo: [],
+  isDone: false,
+  isAll: true,
 };
 
 export const todosSlice = createSlice({
@@ -17,7 +15,12 @@ export const todosSlice = createSlice({
   initialState,
   reducers: {
     getTodos: (state, action: PayloadAction<TodosDto>) => {
+      if (state.isDone) {
+        return;
+      }
+
       state.todos.push(action.payload);
+      state.allTodos.push(action.payload);
     },
     getChecked: (state, action: PayloadAction<string>) => {
       const isChecked = state.checkedTodo.some(item => item === action.payload);
@@ -28,17 +31,51 @@ export const todosSlice = createSlice({
         state.checkedTodo.push(action.payload);
       }
 
-      state.todos.map(todo => {
+      state.todos.concat(state.allTodos).map(todo => {
         const isCompleted = state.checkedTodo.includes(todo.id);
 
         return isCompleted ? todo.completed = true : todo.completed = false;
       });
+    },
+    filterBySearch: (state, action: PayloadAction<string>) => {
+      if (!action.payload.length && state.isDone) {
+        state.todos = state.allTodos.filter(todo => todo.completed);
 
-      state.todos = state.todos.sort((a, _b) => a.completed ? 1 : -1);
+        return;
+      }
+
+      if (!action.payload.length && !state.isDone) {
+        state.todos = state.allTodos;
+
+        return;
+      } else {
+        state.todos = state.todos
+          .filter(todo => todo.text.toLocaleLowerCase().includes(action.payload.toLocaleLowerCase()));
+      }
+    },
+    getDoneTodos: (state) => {
+      state.isDone = true;
+      state.isAll = false;
+    },
+    getAllTodos: (state) => {
+      state.isAll = true;
+      state.isDone = false;
+      state.todos = state.allTodos;
+    },
+    removeTodo: (state, action:PayloadAction<string>) => {
+      state.todos = state.todos.filter(todo => todo.id !== action.payload);
+      state.allTodos = state.allTodos.filter(todo => todo.id !== action.payload);
     },
   },
 });
 
-export const { getTodos, getChecked } = todosSlice.actions
+export const {
+  getTodos,
+  getChecked,
+  filterBySearch,
+  getDoneTodos,
+  getAllTodos,
+  removeTodo,
+} = todosSlice.actions
 
 export default todosSlice.reducer
