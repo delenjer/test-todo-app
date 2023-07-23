@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 
 import { DoneButton } from '../ButtonComponents/DoneButton/DoneButton';
 import { useDispatch, useSelector } from 'react-redux';
@@ -19,10 +19,10 @@ export const Filters = () => {
   }:Pick<InitialStateDto, 'isAll' | 'isDone'> = useSelector((state: RootState) => state.todos);
   const dispatch = useDispatch();
 
-  const handleChange = (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+  const handleChange = useCallback((e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     dispatch(filterBySearch(e.target.value));
     setValue(e.target.value);
-  }
+  }, [dispatch]);
 
   return (
     <div className="filter-container">
