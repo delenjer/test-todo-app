@@ -45,22 +45,6 @@ export const todosSlice = createSlice({
       state.todos.sort((a, _b) => a.completed ? 1 : -1);
       state.allTodos.sort((a, _b) => a.completed ? 1 : -1);
     },
-    filterBySearch: (state, action: PayloadAction<string>) => {
-      if (!action.payload.length && state.isDone) {
-        state.todos = state.allTodos.filter(todo => todo.completed);
-
-        return;
-      }
-
-      if (!action.payload.length && !state.isDone) {
-        state.todos = state.allTodos;
-
-        return;
-      } else {
-        state.todos = state.todos
-          .filter(todo => todo.text.toLocaleLowerCase().includes(action.payload.toLocaleLowerCase()));
-      }
-    },
     getDoneTodos: (state) => {
       state.isDone = true;
       state.isAll = false;
@@ -82,7 +66,6 @@ export const todosSlice = createSlice({
 export const {
   getTodos,
   getChecked,
-  filterBySearch,
   getDoneTodos,
   getAllTodos,
   removeTodo,

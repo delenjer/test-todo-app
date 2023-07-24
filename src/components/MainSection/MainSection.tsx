@@ -1,12 +1,9 @@
 import { AddTodo } from '../AddTask/AddTodo';
-import { TodoList } from '../TodoList/TodoList';
-import { Filters } from '../Filters/Filters';
+import { SectionList } from '../TodoList/SectionList/SectionList';
 
 export const MainSection = () => (
   <div className="main">
-    <Filters />
-
-    <TodoList />
+    <SectionList />
 
     <AddTodo />
   </div>
