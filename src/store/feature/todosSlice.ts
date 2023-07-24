@@ -20,7 +20,6 @@ export const todosSlice = createSlice({
       }
 
       state.todos.push(action.payload);
-      state.allTodos.push(action.payload);
     },
     getChecked: (state, action: PayloadAction<string>) => {
       const isChecked = state.checkedTodo.some(item => item === action.payload);
@@ -36,29 +35,24 @@ export const todosSlice = createSlice({
         state.checkedTodo.push(action.payload);
       }
 
-      state.todos.concat(state.allTodos).map(todo => {
+      state.todos.map(todo => {
         const isCompleted = state.checkedTodo.includes(todo.id);
 
         return isCompleted ? todo.completed = true : todo.completed = false;
       });
 
       state.todos.sort((a, _b) => a.completed ? 1 : -1);
-      state.allTodos.sort((a, _b) => a.completed ? 1 : -1);
     },
     getDoneTodos: (state) => {
       state.isDone = true;
       state.isAll = false;
-
-      state.todos = state.todos.filter(todo => todo.completed);
     },
     getAllTodos: (state) => {
       state.isAll = true;
       state.isDone = false;
-      state.todos = state.allTodos;
     },
     removeTodo: (state, action:PayloadAction<string>) => {
       state.todos = state.todos.filter(todo => todo.id !== action.payload);
-      state.allTodos = state.allTodos.filter(todo => todo.id !== action.payload);
     },
   },
 });

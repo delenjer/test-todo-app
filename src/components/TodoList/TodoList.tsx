@@ -13,7 +13,10 @@ export const TodoList = ({ searchValue }:any) => {
   const [ indexTodo, setIndexTod ] = useState('');
   const [filteredList, setFilteredList] = useState<any>([]);
 
-  const { todos }:Pick<InitialStateDto, 'todos'> = useSelector((state: RootState) => state.todos);
+  const {
+    todos,
+    isDone
+  }:Pick<InitialStateDto, 'todos' | 'isDone'> = useSelector((state: RootState) => state.todos);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -22,14 +25,26 @@ export const TodoList = ({ searchValue }:any) => {
       .startsWith(searchValue.toLowerCase())
     );
 
-    setFilteredList([...todosFiltered]);
-  }, [searchValue, todos]);
+    if (!isDone) {
+      setFilteredList([...todosFiltered]);
+    } else {
+      const filteredDone = todosFiltered.filter(todo => todo.completed);
+
+      setFilteredList([...filteredDone]);
+    }
+  }, [searchValue, todos, isDone]);
+
+
+  useEffect(() => {
+    const done = [...filteredList].filter((item:TodosDto) => item.completed);
+
+    setFilteredList(isDone ? [...done] : [...todos]);
+  }, [isDone]);
 
   const handleModal = (e: { stopPropagation: () => void; }, id: string) => {
     e.stopPropagation();
 
     setIndexTod(id);
-
     setOpen(true);
   }
 
