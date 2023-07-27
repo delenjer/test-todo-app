@@ -55,7 +55,7 @@ export const TodoList = ({ searchValue }:any) => {
   return (
     <>
       {
-        todos.length ? (
+        filteredList.length ? (
           <List sx={{ width: '100%', margin: '0 0 16px 0', }}>
             {
               filteredList.map((todo:TodosDto) => (

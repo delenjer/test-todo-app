@@ -27,10 +27,6 @@ export const todosSlice = createSlice({
       if (isChecked) {
         state.checkedTodo = state.checkedTodo.filter(item => item !== action.payload);
 
-        if (state.isDone) {
-          state.todos = state.todos.filter(todo => todo.id !== action.payload);
-        }
-
       } else {
         state.checkedTodo.push(action.payload);
       }
